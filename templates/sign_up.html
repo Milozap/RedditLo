@@ -15,7 +15,7 @@
           <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
           <div class="card bg-glass">
             <div class="card-body px-4 py-5 px-md-5">
-              <form method="POST" action="/signup">
+              <form method="POST" action="/sign_up">
                 {{ form.csrf_token }}
                 <div class="row">
                   <div class="form-outline mb-4">
@@ -38,7 +38,7 @@
                 </div>
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  {{ form.password(class="form-control",id="password",required='required',type="text",value="",placeholder="Your password") }}
+                  {{ form.password(class="form-control",id="password",required='required',type="password",value="",placeholder="Your password") }}
                   <label class="form-label" for="password">{{ form.password.label.text }}</label>
                   {% for error in form.password.errors %}
                     <p class="help-block">{{ error }}</p>
