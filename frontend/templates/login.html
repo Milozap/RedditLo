@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
-{% block styles %} <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/user.css') }}"> {% endblock %}
+{% block styles %} <link rel= "stylesheet" type= "text/css" href= "{{ url_for('frontend.static',filename='styles/user.css') }}"> {% endblock %}
 {% block content %}
 	<section class="background-radial-gradient overflow-hidden">
 		<div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -37,14 +37,23 @@
 								<button type="submit" class="btn btn-primary btn-block mb-4">
 								Login
 								</button>
-								<div class="text-center">
-									<p>Not a member? <a href="/sign_up">Sign Up</a></p>
-								</div>
-							</form>
-						</div>
+								{% with messages = get_flashed_messages() %}
+								{% if messages %}
+									<ul class="alert alert-danger">
+										{% for message in messages %}
+											<p>{{ message }}</p>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							{% endwith %}
+							<div class="text-center">
+								<p>Not a member? <a href="/sign_up">Sign Up</a></p>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 {% endblock %}
