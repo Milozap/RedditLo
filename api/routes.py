@@ -19,8 +19,10 @@ def get_all_users():
 def get_user(username):
     """Route that returns user if they exist"""
     user = User.query.filter_by(username=username).first()
-    return jsonify(user)
-
+    if user:
+        return jsonify(user), 200
+    else:
+        return {}, 204
 
 @api.route("/users/add_user", methods=["POST"])
 def add_user(data=None):
@@ -35,7 +37,7 @@ def add_user(data=None):
     if not form.username.data or not form.email.data or not form.password.data:
         return (
             jsonify({"status": "error", "message": "Missing data"}),
-            409,
+            400,
         )
     # return error if user with same username already exists
     if User.query.filter_by(username=form.username.data).first():
@@ -64,4 +66,21 @@ def add_user(data=None):
     return (
         jsonify({"status": "success", "message": "User added successfully"}),
         200,
+    )
+
+@api.route("/users/delete_user/<username>")
+def delete_user(username):
+    """Route that deletes user if they exist"""
+    user = User.query.filter_by(username=username).first()
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+        return (
+        jsonify({"status": "success", "message": "User deleted successfully"}),
+        200,
+    )
+    else:
+        return (
+        jsonify({"status": "error", "message": "User doesn't exist"}),
+        404,
     )

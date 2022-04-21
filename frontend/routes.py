@@ -37,7 +37,7 @@ def sign_up():
 
         # return error if form data is missing
         if not form.username.data or not form.email.data or not form.password.data:
-            return redirect(url_for("frontend.sign_up")), 409
+            return redirect(url_for("frontend.sign_up")), 400
         if form.validate_on_submit():
             # try to add user and process response from api
             r = add_user(data=form)
@@ -46,7 +46,7 @@ def sign_up():
             # print(json.loads(r[0].response[0]), file=sys.stderr)
 
             # return 409 and error message on error
-            if status_code == 409:
+            if status_code != 200:
                 flash(response["message"], "error")
                 return redirect(url_for("frontend.sign_up")), 409
 
@@ -62,7 +62,7 @@ def login():
     if request.method == "POST":
         # return error if form data is missing
         if not form.username.data or not form.password.data:
-            return redirect(url_for("frontend.login")), 409
+            return redirect(url_for("frontend.login")), 400
 
         if form.validate_on_submit():
             # TODO change that to get_user from api
