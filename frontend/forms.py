@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, IntegerField
 from wtforms.validators import InputRequired, Email, Length
+from wtforms.widgets import TextArea
 
 
 class LoginForm(FlaskForm):
@@ -27,3 +28,8 @@ class SignUpForm(FlaskForm):
     password = PasswordField(
         "Password", validators=[InputRequired(), Length(min=8, max=60)]
     )
+
+
+class AddPostForm(FlaskForm):
+    text = StringField("Text", widget=TextArea())
+    author = IntegerField("User id")
